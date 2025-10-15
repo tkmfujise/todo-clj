@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.12.2"]
                  [ring "1.15.3"]
                  [compojure "1.7.2"]
+                 [hiccup "2.0.0"]
                  [environ "1.2.0"]]
   :plugins [[lein-environ "1.2.0"]]
   :profiles

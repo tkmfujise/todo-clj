@@ -1,13 +1,15 @@
 (ns todo-clj.handler.todo
   (:require [compojure.core :refer [defroutes context GET]]
+            [todo-clj.db.todo :as todo]
             [todo-clj.view.todo :as view]
             [todo-clj.util.response :as res]))
 
 
 (defn todo-index [req]
-  (-> (view/todo-index-view req)
-      res/response
-      res/html))
+  (let [todo-list (todo/find-todo-all)]
+    (-> (view/todo-index-view req todo-list)
+        res/response
+        res/html)))
 
 
 (defn todo-show [id]

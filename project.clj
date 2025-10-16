@@ -7,7 +7,9 @@
                  [ring "1.15.3"]
                  [compojure "1.7.2"]
                  [hiccup "2.0.0"]
-                 [environ "1.2.0"]]
+                 [environ "1.2.0"]
+                 [org.clojure/java.jdbc "0.7.12"]
+                 [org.xerial/sqlite-jdbc "3.49.1.0"]]
   :plugins [[lein-environ "1.2.0"]]
   :profiles
   {:dev {:dependencies [[prone "2021-04-23"]]

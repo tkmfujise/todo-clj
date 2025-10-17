@@ -28,6 +28,7 @@
 (defn todo-new-post [{:as req :keys [params]}]
   (if-let [todo (todo/save-todo (:title params))]
     (-> (res/redirect (str "/todo/" (:id todo)))
+        (assoc :flash {:msg "TODOを正常に追加しました。"})
         res/html)))
 
 

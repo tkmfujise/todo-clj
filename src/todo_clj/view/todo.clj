@@ -13,14 +13,10 @@
         (layout/common req)))
 
 
-(defn todo-complete-view [req]
-  (->> [:section.card
-         [:h2 "TODOを追加しました"]]
-       (layout/common req)))
-
-
 (defn todo-show-view [req todo]
   (->> [:section.card
+         (when-let [{:keys [msg]} (:flash req)]
+           [:div.alert.alert-success [:strong msg]])
          [:h2 (:title todo)]]
        (layout/common req)))
 

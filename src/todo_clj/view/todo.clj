@@ -55,6 +55,7 @@
          [:h2 "TODO一覧"]
          [:ul
          (for [{:keys [id title]} todo-list]
-           [:li [:a {:href (str "/todo/" id)} title]])]]
+           [:li [:a {:href (str "/todo/" id)} title]])]
+         [:a.wide-link {:href "/todo/new"} "追加する"]]
        (layout/common req)))
 

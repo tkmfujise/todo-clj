@@ -12,6 +12,7 @@
                    "/css/style.css")
       (include-js "/js/main.js")]
     [:body
-      [:header.top-bar.bg-green.depth-3 "TODO-clj"]
+      [:header.top-bar.bg-green.depth-3
+        [:a.wide-link {:href "/"} "TODO-clj"]]
       [:main body]]))
 

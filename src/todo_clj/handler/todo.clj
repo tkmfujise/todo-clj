@@ -32,12 +32,27 @@
         res/html)))
 
 
+(defn todo-edit [{:as req :keys [params]}]
+  (if-let [todo (todo/find-first-todo (Long/parseLong (:todo-id params)))]
+    (-> (view/todo-edit-view req todo)
+        res/response
+        res/html)))
+
+
+(defn todo-edit-post [{:as req :keys [params]}]
+  (let [todo-id (Long/parseLong (:todo-id params))]
+    (if (pos? (first (todo/update-todo todo-id (:title params))))
+      (-> (res/redirect (str "/todo/" todo-id))
+          (assoc :flash {:msg "TODOを正常に更新しましt"})
+          res/html))))
+
+
 (defroutes todo-routes
   (context "/todo" _
     (GET "/" _ todo-index)
     (GET "/new" _ todo-new)
     (POST "/new" _ todo-new-post)
     (context "/:todo-id" _
-      (GET "/" _ todo-show))))
-
-
+      (GET "/" _ todo-show)
+      (GET "/edit" _ todo-edit)
+      (POST "/edit" _ todo-edit-post))))

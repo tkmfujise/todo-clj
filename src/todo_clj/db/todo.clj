@@ -8,6 +8,10 @@
     {:id (-> (first result) vals first)}))
 
 
+(defn update-todo [id title]
+  (jdbc/update! db/db-spec :todo {:title title} ["id = ?" id]))
+
+
 (defn find-todo-all []
   (jdbc/query db/db-spec "select * from todo"))
 

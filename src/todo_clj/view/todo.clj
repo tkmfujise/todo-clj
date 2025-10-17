@@ -38,17 +38,23 @@
 
 
 (defn todo-show-view [req todo]
-  (->> [:section.card
-         (when-let [{:keys [msg]} (:flash req)]
-           [:div.alert.alert-success [:strong msg]])
-         [:h2 (:title todo)]]
-       (layout/common req)))
+  (let [todo-id (:id todo)]
+    (->> [:section.card
+           (when-let [{:keys [msg]} (:flash req)]
+             [:div.alert.alert-success [:strong msg]])
+           [:h2 (:title todo)]
+           [:a.wide-link {:href (str "/todo/" todo-id "/edit")} "修正する"]
+           [:a.wide-link {:href (str "/todo/" todo-id "/delete")} "削除する"]]
+     (layout/common req))))
 
 
 (defn todo-index-view [req todo-list]
-  (->> `([:h1 "TODO一覧"]
-        [:ul
-         ~@(for [{:keys [title]} todo-list]
-              [:li title])])
-        (layout/common req)))
+  (->> [:section.card
+         (when-let [{:keys [msg]} (:flash req)]
+          [:div.alert.alert-success [:string msg]])
+         [:h2 "TODO一覧"]
+         [:ul
+         (for [{:keys [id title]} todo-list]
+           [:li [:a {:href (str "/todo/" id)} title]])]]
+       (layout/common req)))
 

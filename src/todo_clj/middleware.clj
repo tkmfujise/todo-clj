@@ -1,4 +1,10 @@
-(ns todo-clj.middleware)
+(ns todo-clj.middleware
+  (:require [environ.core :refer [env]]
+            [ring.middleware.defaults :as defaults]))
+
+
+(def ^:private wrap #'defaults/wrap)
+
 
 (defn- try-resolve [sym]
   (try
@@ -6,6 +12,7 @@
     (resolve sym)
     (catch java.io.FileNotFoundException _)
     (catch RuntimeException _)))
+
 
 (defn wrap-dev [handler]
   {:pre [(or (fn? handler)
@@ -18,3 +25,9 @@
           wrap-exceptions
           wrap-reload)
       (throw (RuntimeException. "Middleware requires ring/ring-devel and prone;")))))
+
+
+(defn middleware-set [handler]
+  (-> handler
+      (wrap wrap-dev (= (:dev env) "true"))
+      (defaults/wrap-defaults defaults/site-defaults)))

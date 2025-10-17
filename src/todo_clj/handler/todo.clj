@@ -47,6 +47,21 @@
           res/html))))
 
 
+(defn todo-delete [{:as req :keys [params]}]
+  (if-let [todo (todo/find-first-todo (Long/parseLong (:todo-id params)))]
+    (-> (view/todo-delete-view req todo)
+        res/response
+        res/html)))
+
+
+(defn todo-delete-post [{:as req :keys [params]}]
+  (if-let [todo-id (Long/parseLong (:todo-id params))]
+    (if (pos? (first (todo/delete-todo todo-id)))
+      (-> (res/redirect (str "/todo"))
+          (assoc :flash {:msg "TODOを正常に削除しました"})
+          res/html))))
+
+
 (defroutes todo-routes
   (context "/todo" _
     (GET "/" _ todo-index)
@@ -55,4 +70,6 @@
     (context "/:todo-id" _
       (GET "/" _ todo-show)
       (GET "/edit" _ todo-edit)
-      (POST "/edit" _ todo-edit-post))))
+      (POST "/edit" _ todo-edit-post)
+      (GET "/delete" _ todo-delete)
+      (POST "/delete" _ todo-delete-post))))

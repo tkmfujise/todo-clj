@@ -25,6 +25,18 @@
          (layout/common req))))
 
 
+(defn todo-delete-view [req todo]
+  (let [todo-id (get-in req [:params :todo-id])]
+    (->> [:section.card
+           [:h2 "TODO削除"]
+           (hf/form-to
+             [:post (str "/todo/" todo-id "/delete")]
+             [:p "次のTODOを本当に削除しますか？"]
+             [:p "*" (:title todo)]
+             [:button.bg-red "削除する"])]
+         (layout/common req))))
+
+
 (defn todo-show-view [req todo]
   (->> [:section.card
          (when-let [{:keys [msg]} (:flash req)]

@@ -3,11 +3,20 @@
             [todo-clj.view.layout :as layout]))
 
 
+(defn error-messages [req]
+  (when-let [errors (:errors req)]
+    [:ul
+      (for [[k v] errors
+            msg v]
+        [:li.error-message msg])]))
+
+
 (defn todo-new-view [req]
   (->> [:section.card
         [:h2 "TODO追加"]
         (hf/form-to
           [:post "/todo/new"]
+          (error-messages req)
           [:input {:name :title :placeholder "TODOを入れて下さい"}]
           [:button.bg-blue "追加する"])]
         (layout/common req)))
@@ -19,6 +28,7 @@
            [:h2 "TODO編集"]
            (hf/form-to
              [:post (str "/todo/" todo-id "/edit")]
+             (error-messages req)
              [:input {:name :title :value (:title todo)
                       :placeholder "TODOを入力してください"}]
              [:button.bg-blue "更新する"])]

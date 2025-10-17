@@ -1,5 +1,28 @@
 (ns todo-clj.view.todo
-  (:require [todo-clj.view.layout :as layout]))
+  (:require [hiccup.form :as hf]
+            [todo-clj.view.layout :as layout]))
+
+
+(defn todo-new-view [req]
+  (->> [:section.card
+        [:h2 "TODO追加"]
+        (hf/form-to
+          [:post "/todo/new"]
+          [:input {:name :title :placeholder "TODOを入れて下さい"}]
+          [:button.bg-blue "追加する"])]
+        (layout/common req)))
+
+
+(defn todo-complete-view [req]
+  (->> [:section.card
+         [:h2 "TODOを追加しました"]]
+       (layout/common req)))
+
+
+(defn todo-show-view [req todo]
+  (->> [:section.card
+         [:h2 (:title todo)]]
+       (layout/common req)))
 
 
 (defn todo-index-view [req todo-list]

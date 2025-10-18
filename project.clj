@@ -16,7 +16,10 @@
                  [slingshot "0.12.2"]
                  [potemkin "0.4.8"]]
   :plugins [[lein-environ "1.2.0"]]
+  :uberjar-name "todo-clj.jar"
   :profiles
   {:dev {:dependencies [[prone "2021-04-23"]]
-         :env {:dev true}}}
+         :env {:dev true}}
+   :uberjar {:aot :all
+             :main todo-clj.main}}
   :repl-options {:init-ns todo-clj.core})

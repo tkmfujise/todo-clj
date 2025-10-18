@@ -11,7 +11,10 @@
                  [org.clojure/java.jdbc "0.7.12"]
                  [org.xerial/sqlite-jdbc "3.49.1.0"]
                  [bouncer "1.0.1"]
-                 [ring/ring-defaults "0.7.0"]]
+                 [ring/ring-defaults "0.7.0"]
+                 [metosin/ring-http-response "0.9.5"]
+                 [slingshot "0.12.2"]
+                 [potemkin "0.4.8"]]
   :plugins [[lein-environ "1.2.0"]]
   :profiles
   {:dev {:dependencies [[prone "2021-04-23"]]

@@ -1,6 +1,5 @@
 (ns todo-clj.db
-  (:require [clojure.java.jdbc :as jdbc]
-            [environ.core :refer [env]]))
+  (:require [clojure.java.jdbc :as jdbc]))
 
 
 (def db-spec {
